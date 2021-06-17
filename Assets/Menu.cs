@@ -60,7 +60,6 @@ public class Menu : MonoBehaviour
     {
         if (nameInput != "")
         {
-            Debug.Log(GameManager.Instance.highscore_name);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
@@ -77,6 +76,7 @@ public class Menu : MonoBehaviour
     public void QuitGame()
     {
 
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -85,7 +85,7 @@ public class Menu : MonoBehaviour
     }
 
     // ================================================================================================
-    // -
+    // Pop Up Window on invalid input
     // ================================================================================================
 
     IEnumerator PopUpWindow()
@@ -95,4 +95,18 @@ public class Menu : MonoBehaviour
         popUp.SetActive(false);
     }
 
+
+    // // ================================================================================================
+    // // Save/Load Color on Click
+    // // ================================================================================================
+
+    // public void SaveColorClicked()
+    // {
+    //     GameManager.Instance.SaveScore();
+    // }
+
+    // public void LoadColorClicked()
+    // {
+    //     GameManager.Instance.LoadScore();
+    // }
 }

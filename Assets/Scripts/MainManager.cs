@@ -100,13 +100,11 @@ public class MainManager : MonoBehaviour
             // New highscore
             GameManager.Instance.highscore_score = currentHighscore;
             GameManager.Instance.highscore_name = Menu.nameInput;
-            totalScoreText.GetComponent<Text>().text = "Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
         }
-        else
-        {
-            // Old highscore
-            totalScoreText.GetComponent<Text>().text = "Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
-        }
+
+        totalScoreText.GetComponent<Text>().text = "Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
+
+        GameManager.Instance.SaveScore();
     }
 
 }
