@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,17 +11,45 @@ using UnityEditor;
 
 public class Menu : MonoBehaviour
 {
-    public static string inputName;
     public GameObject popUp;
+    public GameObject highscore;
+    public GameObject inputField;
+    public static string nameInput = "";
 
+    void Start()
+    {
+        DisplayHighscore();
+        PlayerName();
+    }
+
+    // ================================================================================================
+    // Highscore
+    // ================================================================================================
+
+    public void DisplayHighscore()
+    {
+        if (GameManager.Instance.highscore_name != "")
+        {
+            highscore.GetComponent<TextMeshProUGUI>().text = "Best Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
+        }
+    }
     // ================================================================================================
     // Input Name
     // ================================================================================================
 
+    void PlayerName()
+    {
+        if (GameManager.Instance.highscore_name != "")
+        {
+            inputField.GetComponent<TMP_InputField>().text = nameInput;
+        }
+
+    }
+
     public void ReadInput(string s)
     {
-        inputName = s;
-        Debug.Log(inputName);
+        // GameManager.Instance.inputName = s;
+        nameInput = s;
     }
 
     // ================================================================================================
@@ -28,10 +58,15 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
-        if (inputName != null)
+        if (nameInput != "")
+        {
+            Debug.Log(GameManager.Instance.highscore_name);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         else
+        {
             StartCoroutine(PopUpWindow());
+        }
 
     }
 

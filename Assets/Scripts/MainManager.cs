@@ -14,7 +14,7 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
 
     public Text totalScoreText;
-    public int maxScore;
+    public int currentHighscore;
 
     private bool m_Started = false;
     private int m_Points;
@@ -40,6 +40,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        TotalScore();
     }
 
     private void Update()
@@ -65,7 +66,12 @@ public class MainManager : MonoBehaviour
             }
 
             TotalScore();
+        }
 
+        // Return to Menu
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
     }
 
@@ -74,8 +80,7 @@ public class MainManager : MonoBehaviour
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
 
-        maxScore += m_Points;
-        Debug.Log(maxScore);
+        currentHighscore = m_Points;
     }
 
     public void GameOver()
@@ -90,7 +95,18 @@ public class MainManager : MonoBehaviour
 
     public void TotalScore()
     {
-        totalScoreText.GetComponent<Text>().text = "Score: " + Menu.inputName + ": " + maxScore;
+        if (GameManager.Instance.highscore_score < currentHighscore)
+        {
+            // New highscore
+            GameManager.Instance.highscore_score = currentHighscore;
+            GameManager.Instance.highscore_name = Menu.nameInput;
+            totalScoreText.GetComponent<Text>().text = "Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
+        }
+        else
+        {
+            // Old highscore
+            totalScoreText.GetComponent<Text>().text = "Score: " + GameManager.Instance.highscore_name + ": " + GameManager.Instance.highscore_score;
+        }
     }
 
 }
